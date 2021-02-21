@@ -1,0 +1,12 @@
+<phpunit>
+  <testsuites>
+    <testsuite name="unit">
+      <directory suffix="_Test.php">php</directory>
+    </testsuite>
+  </testsuites>
+  <coverage>
+    <exclude>
+      <directory suffix="_Test.php">php</directory>
+    </exclude>
+  </coverage>
+</phpunit>

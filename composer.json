@@ -1,0 +1,24 @@
+{
+  "name": "justland/just-func",
+  "description": "just-func language support in PHP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "unional",
+      "email": "homawong@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "justland\\JustFunc\\": "php/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  }
+}
