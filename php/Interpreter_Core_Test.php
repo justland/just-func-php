@@ -1,6 +1,6 @@
 <?php
 
-namespace justland\JustFunc;
+namespace JustLand\JustFunc;
 
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class Interpreter_Core_Test extends TestCase
   public function test_execute_success_will_have_errors_to_be_null()
   {
     $this->s->execute(null);
-    $this->assertNull($this->s->errors);
+    $this->assertNull($this->s->getErrors());
   }
 
   public function test_execute_null_returns_null()

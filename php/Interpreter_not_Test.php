@@ -1,6 +1,6 @@
 <?php
 
-namespace justland\JustFunc;
+namespace JustLand\JustFunc;
 
 use PHPUnit\Framework\TestCase;
 
@@ -17,11 +17,10 @@ class Interpreter_not_Test extends TestCase
     $this->s = new Interpreter();
   }
 
-  public function test_execute()
+  public function test_execute_work_with_boolean()
   {
     $this->assertEquals(false, $this->s->execute(['not', true]));
     $this->assertEquals(true, $this->s->execute(['not', false]));
-    // $this->assertEquals(true, $this->s->execute(['not', 1]));
   }
 
   public function test_execute_with_null_returns_null()
@@ -32,7 +31,7 @@ class Interpreter_not_Test extends TestCase
       "type" => "InvalidType",
       "op" => ['not', null],
       "message" => "The 'not' function expects a single boolean value"
-    ]], $this->s->errors);
+    ]], $this->s->getErrors());
   }
 
   public function test_execute_with_non_boolean_returns_null()

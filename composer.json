@@ -15,7 +15,7 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "justland\\JustFunc\\": "php/"
+      "JustLand\\JustFunc\\": "php/"
     }
   },
   "require-dev": {
