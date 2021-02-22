@@ -17,8 +17,11 @@ class Interpreter
   public function __construct()
   {
     $this->handlers = [
-      'not' => function ($context, $code) {
-        return self::not($context, $code);
+      'not' => function ($context, $args) {
+        return self::not($context, $args);
+      },
+      '==' => function ($context, $args) {
+        return self::equality($context, $args);
       }
     ];
   }
@@ -41,8 +44,7 @@ class Interpreter
 
     if (!is_array($code)) return self::literal($code);
     if (count($code) === 0) return null;
-
-    $op = $code[0];
+    $op = array_shift($code);
     $handler = $this->handlers[$op];
     if ($handler) return $handler($context, $code);
   }
@@ -55,18 +57,27 @@ class Interpreter
   /**
    * @param ExecutionContext $context
    */
-  private static function not($context, $code)
+  private static function not($context, $args)
   {
-    if (count($code) === 2) {
-      $value = $code[1];
+    if (count($args) === 1) {
+      $value = $args[0];
       if ($value === true) return false;
       if ($value === false) return true;
     }
     $context->addError([
       'type' => 'InvalidType',
-      'op' => $code,
+      'op' => 'not',
+      'args' => $args,
       'message' => "The 'not' function expects a single boolean value"
     ]);
     return null;
+  }
+
+  /**
+   * @param ExecutionContext $context
+   */
+  private static function equality($context, $args)
+  {
+    $count = count($args);
   }
 }

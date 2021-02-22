@@ -29,7 +29,8 @@ class Interpreter_not_Test extends TestCase
 
     $this->assertEquals([[
       "type" => "InvalidType",
-      "op" => ['not', null],
+      "op" => 'not',
+      'args' => [null],
       "message" => "The 'not' function expects a single boolean value"
     ]], $this->s->getErrors());
   }
