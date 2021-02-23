@@ -53,12 +53,4 @@ class Interpreter
   {
     return $code;
   }
-
-  /**
-   * @param ExecutionContext $context
-   */
-  private static function equality($context, $args)
-  {
-    $count = count($args);
-  }
 }
