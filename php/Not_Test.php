@@ -27,12 +27,7 @@ class Not_Test extends TestCase
   {
     $this->assertEquals(null, $this->s->execute(['not', null]));
 
-    $this->assertEquals([[
-      "type" => "InvalidType",
-      "op" => 'not',
-      'args' => [null],
-      "message" => "The 'not' function expects a single boolean value"
-    ]], $this->s->getErrors());
+    $this->assertEquals([ArityError::create('not', [null])], $this->s->getErrors());
   }
 
   public function test_execute_with_non_boolean_returns_null()

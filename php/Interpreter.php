@@ -21,7 +21,7 @@ class Interpreter
         return Not::invoke($context, $args);
       },
       '==' => function ($context, $args) {
-        return self::equality($context, $args);
+        return Equality::invoke($context, $args);
       }
     ];
   }
@@ -52,13 +52,5 @@ class Interpreter
   private static function literal($code)
   {
     return $code;
-  }
-
-  /**
-   * @param ExecutionContext $context
-   */
-  private static function equality($context, $args)
-  {
-    $count = count($args);
   }
 }
