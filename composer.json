@@ -10,7 +10,10 @@
     }
   ],
   "scripts": {
-    "coverage": "export XDEBUG_MODE=coverage && phpunit --log-junit .php/junit.xml --coverage-clover .php/clover.xml",
+    "coverage": [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit --log-junit .php/junit.xml --coverage-clover .php/clover.xml"
+    ],
     "lint": "phplint",
     "test": "phpunit",
     "verify": "composer lint && composer coverage"
