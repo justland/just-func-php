@@ -4,7 +4,7 @@ namespace JustLand\JustFunc;
 
 use PHPUnit\Framework\TestCase;
 
-class Interpreter_not_Test extends TestCase
+class Not_Test extends TestCase
 {
   /**
    * @var Interpreter

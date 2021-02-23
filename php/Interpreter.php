@@ -18,7 +18,7 @@ class Interpreter
   {
     $this->handlers = [
       'not' => function ($context, $args) {
-        return self::not($context, $args);
+        return Not::invoke($context, $args);
       },
       '==' => function ($context, $args) {
         return self::equality($context, $args);
@@ -52,25 +52,6 @@ class Interpreter
   private static function literal($code)
   {
     return $code;
-  }
-
-  /**
-   * @param ExecutionContext $context
-   */
-  private static function not($context, $args)
-  {
-    if (count($args) === 1) {
-      $value = $args[0];
-      if ($value === true) return false;
-      if ($value === false) return true;
-    }
-    $context->addError([
-      'type' => 'InvalidType',
-      'op' => 'not',
-      'args' => $args,
-      'message' => "The 'not' function expects a single boolean value"
-    ]);
-    return null;
   }
 
   /**
