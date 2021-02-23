@@ -35,17 +35,22 @@ class Interpreter
    */
   public function execute($code)
   {
-    $context = $this->context = new ExecutionContext();
-    $context->resetErrors();
+    $c = $this->context = new ExecutionContext();
+    $c->resetErrors();
 
     if (!is_array($code)) return self::literal($code);
     if (count($code) === 0) return null;
-    $op = array_shift($code);
-    $handler = $this->handlers[$op];
+    $fn = array_shift($code);
+    if (!isset($this->handlers[$fn])) {
+      $c->addError(UnknownSymbol::create($fn, $code));
+      return null;
+    }
+
+    $handler = $this->handlers[$fn];
     if ($handler) {
       return is_array($handler)
-        ? call_user_func_array($handler, [$context, $code])
-        : $handler($context, $code);
+        ? call_user_func_array($handler, [$c, $code])
+        : $handler($c, $code);
     }
   }
 

@@ -43,4 +43,11 @@ class Interpreter_Core_Test extends TestCase
     $this->assertEquals(1.2, $this->s->execute(1.2));
     $this->assertEquals(1, $this->s->execute(1));
   }
+  public function test_execute_not_found_handler_gets_null()
+  {
+    $this->assertNull($this->s->execute(['not-exist']));
+    $this->assertEquals([
+      UnknownSymbol::create('not-exist', [])
+    ], $this->s->getErrors());
+  }
 }
