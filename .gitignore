@@ -42,9 +42,10 @@ build/Release
 /vendor/
 
 # cache directory
+.php
 .npm
 .yarn
-*.cache
+*.bak
 
 # Optional REPL history
 .node_repl_history

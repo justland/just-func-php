@@ -10,7 +10,10 @@
     }
   ],
   "scripts": {
-    "test": "phpunit"
+    "coverage": "export XDEBUG_MODE=coverage && phpunit --log-junit .php/junit.xml --coverage-clover .php/clover.xml",
+    "lint": "phplint",
+    "test": "phpunit",
+    "verify": "composer lint && composer coverage"
   },
   "minimum-stability": "stable",
   "autoload": {
@@ -19,6 +22,7 @@
     }
   },
   "require-dev": {
+    "overtrue/phplint": "^1.1",
     "phpunit/phpunit": "^9.5"
   }
 }
