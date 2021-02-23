@@ -21,7 +21,7 @@ class Interpreter
         return Not::invoke($context, $args);
       },
       '==' => function ($context, $args) {
-        return self::equality($context, $args);
+        return Equality::invoke($context, $args);
       }
     ];
   }
