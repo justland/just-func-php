@@ -43,10 +43,9 @@ class Interpreter
     $op = array_shift($code);
     $handler = $this->handlers[$op];
     if ($handler) {
-      if (is_array($handler)) {
-        return call_user_func_array($handler, [$context, $code]);
-      }
-      return $handler($context, $code);
+      return is_array($handler)
+        ? call_user_func_array($handler, [$context, $code])
+        : $handler($context, $code);
     }
   }
 
