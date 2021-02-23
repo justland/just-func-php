@@ -17,12 +17,8 @@ class Interpreter
   public function __construct()
   {
     $this->handlers = [
-      'not' => function ($context, $args) {
-        return Not::invoke($context, $args);
-      },
-      '==' => function ($context, $args) {
-        return Equality::invoke($context, $args);
-      }
+      'not' => [Not::class, 'invoke'],
+      '==' => [Equality::class, 'invoke']
     ];
   }
 
@@ -46,7 +42,12 @@ class Interpreter
     if (count($code) === 0) return null;
     $op = array_shift($code);
     $handler = $this->handlers[$op];
-    if ($handler) return $handler($context, $code);
+    if ($handler) {
+      if (is_array($handler)) {
+        return call_user_func_array($handler, [$context, $code]);
+      }
+      return $handler($context, $code);
+    }
   }
 
   private static function literal($code)
