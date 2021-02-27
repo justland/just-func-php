@@ -15,7 +15,7 @@
       "phpunit --log-junit .php/junit.xml --coverage-clover .php/clover.xml"
     ],
     "lint": "phplint",
-    "test": "phpunit",
+    "test": "phpunit --no-coverage",
     "verify": "composer lint && composer coverage"
   },
   "minimum-stability": "stable",
