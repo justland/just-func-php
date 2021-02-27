@@ -19,7 +19,7 @@ class Equality_Test extends TestCase
 
   public function test_requires_at_least_one_arg()
   {
-    $this->assertEquals(null, $this->s->execute(['==']));
+    $this->assertSame(null, $this->s->execute(['==']));
     $this->assertEquals(
       [[
         'type' => 'Arity',
