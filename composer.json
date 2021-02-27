@@ -9,6 +9,9 @@
       "email": "homawong@gmail.com"
     }
   ],
+  "config": {
+    "process-timeout": 0
+  },
   "scripts": {
     "coverage": [
       "@putenv XDEBUG_MODE=coverage",
