@@ -45,26 +45,13 @@ class Equality_Test extends TestCase
 
   public function test()
   {
-    $this->assertTrue($this->s->execute(['==', 1, 1, 1, 1]));
-    $this->assertFalse($this->s->execute(['==', '1', '1', '1', 2]));
-  }
-
-  public function skip_test_execute_works_on_boolean()
-  {
+    $this->assertTrue($this->s->execute(['==', 1, 1]));
     $this->assertTrue($this->s->execute(['==', true, true]));
-    $this->assertTrue($this->s->execute(['==', false, false]));
-    $this->assertFalse($this->s->execute(['==', true, false]));
-    $this->assertFalse($this->s->execute(['==', false, true]));
+    $this->assertFalse($this->s->execute(['==', '1', 1]));
   }
-
-  public function test_execute_with_null_and_literals()
+  public function test_supports_variadic_arguments()
   {
-    $this->assertTrue($this->s->execute(['==', null, null]));
-    $this->assertFalse($this->s->execute(['==', null, 0]));
-    $this->assertFalse($this->s->execute(['==', null, false]));
-    $this->assertFalse($this->s->execute(['==', null, '']));
-    $this->assertFalse($this->s->execute(['==', 0, null]));
-    $this->assertFalse($this->s->execute(['==', false, null]));
-    $this->assertFalse($this->s->execute(['==', '', null]));
+    $this->assertTrue($this->s->execute(['==', 1, 1, 1, 1]));
+    $this->assertFalse($this->s->execute(['==', 1, 1, 1, 2]));
   }
 }
