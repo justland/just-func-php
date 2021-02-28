@@ -11,9 +11,7 @@ class Add
   public static function invoke($context, $args)
   {
     return array_reduce($args, function ($p, $v) {
-      if (is_string($v)) return null;
-      if (!is_numeric($v)) return null;
-      return $p + $v;
+      if (Number::isNumericOnly($v)) return $p + $v;
     }, 0);
   }
 }

@@ -38,5 +38,6 @@ class Add_Test extends TestCase
   {
     $this->assertSame(null, $this->s->execute(['+', true]));
     $this->assertSame(null, $this->s->execute(['+', '1']));
+    $this->assertSame(null, $this->s->execute(['+', null]));
   }
 }
