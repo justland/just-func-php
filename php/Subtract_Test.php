@@ -6,41 +6,46 @@ class Subtract_Test extends InterpreterTestCase
 {
   public function test_requires_at_least_one_arg()
   {
-    list($result, $errors) = $this->s->execute(['-']);
-    $this->assertNull($result);
-    $this->assertEquals([ArityMismatch::create('-', [])], $errors);
+    $this->testEvaluate(null, [ArityMismatch::create('-', [])], ['-']);
   }
 
   public function test_single_arg_returns_negative_arg()
   {
-    $this->assertSame(0, $this->testExecuteResult(['-', 0]));
-    $this->assertSame(-3, $this->testExecuteResult(['-', 3]));
+    $this->testEvaluate(0, null, ['-', 0]);
+    $this->testEvaluate(-3, null, ['-', 3]);
   }
 
   public function test_subtract_two_numbers()
   {
-    $this->assertSame(1, $this->testExecuteResult(['-', 3, 2]));
+    $this->testEvaluate(1, null, ['-', 3, 2]);
   }
 
   public function test_multiple_numbers()
   {
-    $this->assertSame(0, $this->testExecuteResult(['-', 10, 1, 2, 3, 4]));
+    $this->testEvaluate(0, null, ['-', 10, 1, 2, 3, 4]);
   }
 
   public function test_negative_numbers()
   {
-    $this->assertSame(2, $this->testExecuteResult(['-', 1, -1]));
-    $this->assertSame(0, $this->testExecuteResult(['-', -1, -1]));
+    $this->testEvaluate(2, null, ['-', 1, -1]);
+    $this->testEvaluate(0, null, ['-', -1, -1]);
   }
 
   public function test_not_numeric_returns_null()
   {
-    $this->assertNull($this->testExecuteResult(['-', true]));
-    $this->assertNull($this->testExecuteResult(['-', '1']));
-    $this->assertNull($this->testExecuteResult(['-', null]));
+    $this->testEvaluate(null, null, ['-', true]);
+    $this->testEvaluate(null, null, ['-', '1']);
+    $this->testEvaluate(null, null, ['-', null]);
   }
   public function test_nested()
   {
-    $this->assertSame(3, $this->testExecuteResult(['-', ['-', 10, 2], ['-', 10, 5]]));
+    $this->testEvaluate(3, null, ['-', ['-', 10, 2], ['-', 10, 5]]);
+  }
+  public function test_ratio()
+  {
+    $this->testEvaluate(['ratio', -1, 3], null, ['-', ['ratio', 3]]);
+    $this->testEvaluate(['ratio', 8, 3], null, ['-', 3, ['ratio', 3]]);
+    $this->testEvaluate(['ratio', 8, 3], null, ['-', 3, ['ratio', 3]]);
+    $this->testEvaluate(['ratio', -1, 12], null, ['-', ['ratio', 2, 3], ['ratio', 3, 4]]);
   }
 }

@@ -16,9 +16,20 @@ class Equality
       return null;
     }
 
-    $value = $context->execute(array_shift($args));
+    $p = $context->execute(array_shift($args));
     foreach ($args as $arg) {
-      if ($context->execute($arg) !== $value) return false;
+      $v = $context->execute($arg);
+      if (Ratio::isRatio($p)) {
+        if (Ratio::isRatio($v)) {
+          if ($p[1] * $v[2] !== $v[1] * $p[2]) return false;
+        } else {
+          return false;
+        }
+      } else if (Ratio::isRatio($v)) {
+        return false;
+      } else {
+        if ($v !== $p) return false;
+      }
     }
     return true;
   }

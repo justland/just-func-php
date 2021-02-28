@@ -34,19 +34,20 @@ class Ratio
     if ($c === 1) {
       return self::invoke($context, [1, $args[0]]);
     }
-    list($numerator, $denominator) = array_map(function($v) use ($context) {
+
+    list($numerator, $denominator) = array_map(function ($v) use ($context) {
       return $context->execute($v);
     }, $args);
 
-    if(Ratio::isRatio($numerator)) {
-
+    if (self::isRatio($numerator)) {
+      return $context->execute(['ratio', $numerator[1], ['*', $numerator[2], $denominator]]);
     }
-
+    if (self::isRatio($denominator)) {
+      return $context->execute(['ratio', ['*', $numerator, $denominator[2]], $denominator[1]]);
+    }
+    $remainder = $numerator % $denominator;
+    if ($remainder === 0) return ($numerator - $remainder) / $denominator;
     return ['ratio', $numerator, $denominator];
-  }
-
-  public static function op($context, $op, $args)
-  {
   }
 
   public static function unbox($context, $args)

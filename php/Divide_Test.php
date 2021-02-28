@@ -6,9 +6,7 @@ class Divide_Test extends InterpreterTestCase
 {
   public function test_requires_at_least_one_arg()
   {
-    list($result, $errors) = $this->s->execute(['/']);
-    $this->assertNull($result);
-    $this->assertEquals([ArityMismatch::create('/', [])], $errors);
+    $this->testEvaluate(null, [ArityMismatch::create('/', [])], ['/']);
   }
 
   public function test_single_0_gets_divide_by_zero()
@@ -46,8 +44,14 @@ class Divide_Test extends InterpreterTestCase
     $this->assertNull($this->testExecuteResult(['/', '1']));
     $this->assertNull($this->testExecuteResult(['/', null]));
   }
-  public function skip_test_nested()
+  public function test_nested()
   {
     $this->assertSame(3, $this->testExecuteResult(['/', ['/', 12, 2], ['/', 10, 5]]));
+  }
+  public function test_ratio()
+  {
+    $this->testEvaluate(3, null, ['/', ['ratio', 3]]);
+    $this->testEvaluate(6, null, ['/', 2, ['ratio', 3]]);
+    $this->testEvaluate(['ratio', 3, 2], null, ['/', ['ratio', 2], ['ratio', 3]]);
   }
 }

@@ -39,6 +39,17 @@ class InterpreterTestCase extends TestCase
     return $result;
   }
 
+  protected function testEvaluate($expectedResult, $expectedErrors, $code)
+  {
+    list($result, $errors) = $this->s->evaluate($code);
+    if (is_array($expectedResult)) {
+      $this->assertEquals($expectedResult, $result);
+    } else {
+      $this->assertSame($expectedResult, $result);
+    }
+    $this->assertEquals($expectedErrors, $errors);
+  }
+
   protected function testEvaluateResult($code)
   {
     list($result, $errors) = $this->s->evaluate($code);

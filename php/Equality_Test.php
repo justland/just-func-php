@@ -43,4 +43,11 @@ class Equality_Test extends InterpreterTestCase
       true
     ]));
   }
+
+  public function test_ratio()
+  {
+    $this->testEvaluate(false, null, ['==', 1, ['ratio', 2, 6]]);
+    $this->testEvaluate(false, null, ['==', ['ratio', 2, 6], 1]);
+    $this->testEvaluate(true, null, ['==', ['ratio', 1, 3], ['ratio', 2, 6]]);
+  }
 }
