@@ -54,7 +54,7 @@ class Equality_Test extends TestCase
     $this->assertTrue($this->s->execute(['==', 1, 1, 1, 1]));
     $this->assertFalse($this->s->execute(['==', 1, 1, 1, 2]));
   }
-  public function test_nested_equality()
+  public function test_nested()
   {
     $this->assertTrue($this->s->execute([
       '==',

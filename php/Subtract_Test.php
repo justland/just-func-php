@@ -59,7 +59,7 @@ class Subtract_Test extends TestCase
     $this->assertSame(null, $this->s->execute(['-', '1']));
     $this->assertSame(null, $this->s->execute(['-', null]));
   }
-  public function test_nested_subtract()
+  public function test_nested()
   {
     $this->assertSame(3, $this->s->execute(['-', ['-', 10, 2], ['-', 10, 5]]));
   }

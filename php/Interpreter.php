@@ -15,7 +15,8 @@ class Interpreter
       'not' => Not::class,
       '==' => Equality::class,
       '+' => Add::class,
-      '-' => Subtract::class
+      '-' => Subtract::class,
+      '*' => Multiply::class
     ]);
   }
 
