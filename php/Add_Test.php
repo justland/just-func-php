@@ -40,4 +40,8 @@ class Add_Test extends TestCase
     $this->assertSame(null, $this->s->execute(['+', '1']));
     $this->assertSame(null, $this->s->execute(['+', null]));
   }
+  public function test_nested_add()
+  {
+    $this->assertSame(6, $this->s->execute(['+', ['+', 1, 2], ['+', 1, 2]]));
+  }
 }

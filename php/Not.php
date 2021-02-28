@@ -11,7 +11,7 @@ class Not
   public static function invoke($context, $args)
   {
     if (count($args) === 1) {
-      $value = $args[0];
+      $value = $context->execute($args[0]);
       if ($value === true) return false;
       if ($value === false) return true;
     }

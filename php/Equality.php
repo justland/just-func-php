@@ -15,9 +15,9 @@ class Equality
       return null;
     }
 
-    $value = array_shift($args);
+    $value = $context->execute(array_shift($args));
     foreach ($args as $arg) {
-      if ($arg !== $value) return false;
+      if ($context->execute($arg) !== $value) return false;
     }
     return true;
   }

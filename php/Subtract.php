@@ -15,14 +15,15 @@ class Subtract
       $context->addError(ArityError::create('-', $args));
       return null;
     }
-    $first = array_shift($args);
+    $first = $context->execute(array_shift($args));
     if (!Number::isNumericOnly($first)) return null;
 
     if ($c === 1) {
       return -$first;
     }
 
-    return array_reduce($args, function ($p, $v) {
+    return array_reduce($args, function ($p, $v) use ($context) {
+      $v = $context->execute($v);
       if (Number::isNumericOnly($v)) return $p - $v;
     }, $first);
   }

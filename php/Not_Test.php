@@ -54,4 +54,9 @@ class Not_Test extends TestCase
   {
     $this->assertSame(null, $this->s->execute(['not', [true, false]]));
   }
+
+  public function test_nested_not()
+  {
+    $this->assertTrue($this->s->execute(['not', ['not', true]]));
+  }
 }
