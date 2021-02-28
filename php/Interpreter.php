@@ -14,12 +14,13 @@ class Interpreter
     $this->context = new ExecutionContext([
       Not::KEY => Not::class,
       Equality::KEY => Equality::class,
+      ListFn::KEY => ListFn::class,
+      Ratio::KEY => Ratio::class,
       Add::KEY => Add::class,
       Subtract::KEY => Subtract::class,
       Multiply::KEY => Multiply::class,
       Divide::KEY => Divide::class,
-      Ratio::KEY => Ratio::class,
-      ListFn::KEY => ListFn::class
+      Mod::KEY => Mod::class
     ]);
   }
 

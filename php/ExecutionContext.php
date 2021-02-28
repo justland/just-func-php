@@ -21,7 +21,7 @@ class ExecutionContext
 
   public function resetErrors()
   {
-   $this->errors = [];
+    $this->errors = [];
   }
 
   public function addError($errorInfo)
@@ -60,14 +60,14 @@ class ExecutionContext
     }
   }
 
-  public function unbox($code) {
+  public function unbox($code)
+  {
     if (is_array($code)) {
-      $type = array_shift($code);
+      $type = $code[0];
       $handler = $this->handlers[$type];
       return call_user_func_array([$handler, 'unbox'], [$this, $code]);
     }
     return $code;
-
   }
 
   private static function literal($code)

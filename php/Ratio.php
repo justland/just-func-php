@@ -50,8 +50,8 @@ class Ratio
     return ['ratio', $numerator, $denominator];
   }
 
-  public static function unbox($context, $args)
+  public static function unbox($context, $code)
   {
-    return $args[0] / $args[1];
+    return $code[1] / $code[2];
   }
 }
