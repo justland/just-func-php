@@ -21,12 +21,7 @@ class Equality_Test extends TestCase
   {
     $this->assertSame(null, $this->s->execute(['==']));
     $this->assertEquals(
-      [[
-        'type' => 'Arity',
-        'fn' => '==',
-        'args' => [],
-        'msg' => 'Wrong number of args (0) passed to: =='
-      ]],
+      [ArityMismatch::create('==', [])],
       $this->s->getErrors()
     );
   }

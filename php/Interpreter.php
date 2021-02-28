@@ -16,7 +16,8 @@ class Interpreter
       '==' => Equality::class,
       '+' => Add::class,
       '-' => Subtract::class,
-      '*' => Multiply::class
+      '*' => Multiply::class,
+      // '/' => Divide::class
     ]);
   }
 

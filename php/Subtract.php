@@ -12,7 +12,7 @@ class Subtract
   {
     $c = count($args);
     if ($c === 0) {
-      $context->addError(ArityError::create('-', $args));
+      $context->addError(ArityMismatch::create('-', $args));
       return null;
     }
     $first = $context->execute(array_shift($args));

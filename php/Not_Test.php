@@ -27,7 +27,7 @@ class Not_Test extends TestCase
   {
     $this->assertSame(null, $this->s->execute(['not', null]));
 
-    $this->assertEquals([ArityError::create('not', [null])], $this->s->getErrors());
+    $this->assertEquals([ArityMismatch::create('not', [null])], $this->s->getErrors());
   }
 
   public function test_execute_with_non_boolean_returns_null()

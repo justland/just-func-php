@@ -2,12 +2,12 @@
 
 namespace JustLand\JustFunc;
 
-class ArityError
+class ArityMismatch
 {
   public static function create($fn, $args) {
     $count = count($args);
     return [
-      'type' => 'Arity',
+      'type' => 'ArityMismatch',
       'fn' => $fn,
       'args' => $args,
       'msg' => "Wrong number of args ($count) passed to: $fn"

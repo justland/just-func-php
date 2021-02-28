@@ -11,7 +11,7 @@ class Equality
   public static function invoke($context, $args)
   {
     if (count($args) === 0) {
-      $context->addError(ArityError::create('==', $args));
+      $context->addError(ArityMismatch::create('==', $args));
       return null;
     }
 
