@@ -10,11 +10,9 @@ class Add
    */
   public static function invoke($context, $args)
   {
-    if (count($args) === 0) {
-      return 0;
-    }
-
     return array_reduce($args, function ($p, $v) {
+      if (is_string($v)) return null;
+      if (!is_numeric($v)) return null;
       return $p + $v;
     }, 0);
   }

@@ -34,4 +34,9 @@ class Add_Test extends TestCase
   {
     $this->assertSame(-1, $this->s->execute(['+', 1, -2]));
   }
+  public function test_not_numeric_gets_null()
+  {
+    $this->assertSame(null, $this->s->execute(['+', true]));
+    $this->assertSame(null, $this->s->execute(['+', '1']));
+  }
 }
