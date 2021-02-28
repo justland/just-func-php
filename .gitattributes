@@ -5,3 +5,9 @@
 # GitHub Linguist Override
 .yarn/* linguist-vendored
 .pnp.js linguist-vendored
+
+# Exclude files in composer distribution
+/.*                    export-ignore
+/php/*_Test.php        export-ignore
+/php/*TestCase.php     export-ignore
+/phpunit.xml           export-ignore

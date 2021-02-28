@@ -4,6 +4,8 @@ namespace JustLand\JustFunc;
 
 class Not
 {
+  const KEY = 'not';
+
   /**
    * @param ExecutionContext $context
    * @param array $args

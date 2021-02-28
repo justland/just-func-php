@@ -2,56 +2,41 @@
 
 namespace JustLand\JustFunc;
 
-use PHPUnit\Framework\TestCase;
-
-class Equality_Test extends TestCase
+class Equality_Test extends InterpreterTestCase
 {
-  /**
-   * @var Interpreter
-   */
-  private $s;
-
-  protected function setUp(): void
-  {
-    parent::setUp();
-    $this->s = new Interpreter();
-  }
-
   public function test_requires_at_least_one_arg()
   {
-    $this->assertSame(null, $this->s->execute(['==']));
-    $this->assertEquals(
-      [ArityMismatch::create('==', [])],
-      $this->s->getErrors()
-    );
+    list($result, $errors) = $this->s->execute(['==']);
+    $this->assertNull($result);
+    $this->assertEquals([ArityMismatch::create('==', [])], $errors);
   }
 
   public function test_single_literal_arg_always_true()
   {
-    $this->assertTrue($this->s->execute(['==', true]));
-    $this->assertTrue($this->s->execute(['==', false]));
-    $this->assertTrue($this->s->execute(['==', -1]));
-    $this->assertTrue($this->s->execute(['==', 0]));
-    $this->assertTrue($this->s->execute(['==', 1]));
-    $this->assertTrue($this->s->execute(['==', '']));
-    $this->assertTrue($this->s->execute(['==', 'a']));
-    $this->assertTrue($this->s->execute(['==', null]));
+    $this->assertTrue($this->testExecuteResult(['==', true]));
+    $this->assertTrue($this->testExecuteResult(['==', false]));
+    $this->assertTrue($this->testExecuteResult(['==', -1]));
+    $this->assertTrue($this->testExecuteResult(['==', 0]));
+    $this->assertTrue($this->testExecuteResult(['==', 1]));
+    $this->assertTrue($this->testExecuteResult(['==', '']));
+    $this->assertTrue($this->testExecuteResult(['==', 'a']));
+    $this->assertTrue($this->testExecuteResult(['==', null]));
   }
 
   public function test()
   {
-    $this->assertTrue($this->s->execute(['==', 1, 1]));
-    $this->assertTrue($this->s->execute(['==', true, true]));
-    $this->assertFalse($this->s->execute(['==', '1', 1]));
+    $this->assertTrue($this->testExecuteResult(['==', 1, 1]));
+    $this->assertTrue($this->testExecuteResult(['==', true, true]));
+    $this->assertFalse($this->testExecuteResult(['==', '1', 1]));
   }
   public function test_supports_variadic_arguments()
   {
-    $this->assertTrue($this->s->execute(['==', 1, 1, 1, 1]));
-    $this->assertFalse($this->s->execute(['==', 1, 1, 1, 2]));
+    $this->assertTrue($this->testExecuteResult(['==', 1, 1, 1, 1]));
+    $this->assertFalse($this->testExecuteResult(['==', 1, 1, 1, 2]));
   }
   public function test_nested()
   {
-    $this->assertTrue($this->s->execute([
+    $this->assertTrue($this->testExecuteResult([
       '==',
       ['==', 1, 1],
       ['==', 'a', 'a'],

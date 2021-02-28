@@ -5,9 +5,9 @@ namespace JustLand\JustFunc;
 class ExecutionContext
 {
   /**
-   * @var array|null Contains the error information about the execution.
+   * @var array Contains the error information about the execution.
    */
-  public $errors;
+  private $errors = [];
 
   /**
    * @var array
@@ -21,14 +21,23 @@ class ExecutionContext
 
   public function resetErrors()
   {
-    $this->errors = null;
+   $this->errors = [];
   }
 
   public function addError($errorInfo)
   {
-    if (!$this->errors) $this->errors = [];
     array_push($this->errors, $errorInfo);
   }
+
+  /**
+   * gets errors collected during execution
+   * @return array|null
+   */
+  public function getErrors()
+  {
+    return count($this->errors) ? $this->errors : null;
+  }
+
   public function execute($code)
   {
     if (!is_array($code)) return self::literal($code);
@@ -49,6 +58,16 @@ class ExecutionContext
       }
       return $handler($this, $code);
     }
+  }
+
+  public function unbox($code) {
+    if (is_array($code)) {
+      $type = array_shift($code);
+      $handler = $this->handlers[$type];
+      return call_user_func_array([$handler, 'unbox'], [$this, $code]);
+    }
+    return $code;
+
   }
 
   private static function literal($code)

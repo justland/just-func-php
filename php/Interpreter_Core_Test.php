@@ -2,52 +2,38 @@
 
 namespace JustLand\JustFunc;
 
-use PHPUnit\Framework\TestCase;
-
 /**
  * Core test tests the interpreter without language extension
  */
-class Interpreter_Core_Test extends TestCase
+class Interpreter_Core_Test extends InterpreterTestCase
 {
-  /**
-   * @var Interpreter
-   */
-  private $s;
-
-  protected function setUp(): void
-  {
-    parent::setUp();
-    $this->s = new Interpreter();
-  }
-
   public function test_execute_success_will_have_errors_to_be_null()
   {
-    $this->s->execute(null);
-    $this->assertNull($this->s->getErrors());
+    list(, $errors) = $this->s->execute(null);
+    $this->assertNull($errors);
   }
 
   public function test_execute_null_returns_null()
   {
-    $this->assertEquals(null, $this->s->execute(null));
+    $this->assertNull($this->testExecuteResult(null));
   }
 
   public function test_execute_empty_array_returns_null()
   {
-    $this->assertEquals(null, $this->s->execute([]));
+    $this->assertNull($this->testExecuteResult([]));
   }
 
   public function test_execute_return_literal()
   {
-    $this->assertEquals('abc', $this->s->execute('abc'));
-    $this->assertEquals(true, $this->s->execute(true));
-    $this->assertEquals(1.2, $this->s->execute(1.2));
-    $this->assertEquals(1, $this->s->execute(1));
+    $this->assertEquals('abc', $this->testExecuteResult('abc'));
+    $this->assertEquals(true, $this->testExecuteResult(true));
+    $this->assertEquals(1.2, $this->testExecuteResult(1.2));
+    $this->assertEquals(1, $this->testExecuteResult(1));
   }
   public function test_execute_not_found_handler_gets_null()
   {
-    $this->assertNull($this->s->execute(['not-exist']));
-    $this->assertEquals([
-      UnknownSymbol::create('not-exist', [])
-    ], $this->s->getErrors());
+    list($result, $errors) = $this->s->execute(['not-exist']);
+    $this->assertNull($result);
+    $this->assertEquals([UnknownSymbol::create('not-exist', [])], $errors);
   }
 }

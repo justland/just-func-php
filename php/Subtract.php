@@ -4,6 +4,7 @@ namespace JustLand\JustFunc;
 
 class Subtract
 {
+  const KEY = '-';
   /**
    * @param ExecutionContext $context
    * @param array $args

@@ -2,46 +2,50 @@
 
 namespace JustLand\JustFunc;
 
-use PHPUnit\Framework\TestCase;
-
-class Add_Test extends TestCase
+class Add_Test extends InterpreterTestCase
 {
-  /**
-   * @var Interpreter
-   */
-  private $s;
-
-  protected function setUp(): void
-  {
-    parent::setUp();
-    $this->s = new Interpreter();
-  }
-
   public function test_no_arg_returns_0()
   {
-    $this->assertSame(0, $this->s->execute(['+']));
+    $this->testExecute(0, null, ['+']);
   }
   public function test_single_arg_returns_arg()
   {
-    $this->assertSame(0, $this->s->execute(['+', 0]));
-    $this->assertSame(3, $this->s->execute(['+', 3]));
+    $this->testExecute(0, null, ['+', 0]);
+    $this->testExecute(3, null, ['+', 3]);
   }
   public function test_multiple_args()
   {
-    $this->assertSame(10, $this->s->execute(['+', 1, 2, 3, 4]));
+    $this->testExecute(10, null, ['+', 1, 2, 3, 4]);
   }
   public function test_negative_numbers()
   {
-    $this->assertSame(-1, $this->s->execute(['+', 1, -2]));
+    $this->testExecute(-1, null, ['+', 1, -2]);
   }
   public function test_not_numeric_gets_null()
   {
-    $this->assertSame(null, $this->s->execute(['+', true]));
-    $this->assertSame(null, $this->s->execute(['+', '1']));
-    $this->assertSame(null, $this->s->execute(['+', null]));
+    $this->testExecute(
+      null,
+      [TypeMismatch::create('+', 0, 'number', true)],
+      ['+', true]
+    );
+    $this->testExecute(
+      null,
+      [TypeMismatch::create('+', 0, 'number', '1')],
+      ['+', '1']
+    );
+    $this->testExecute(
+      null,
+      [TypeMismatch::create('+', 0, 'number', null)],
+      ['+', null]
+    );
+    $this->testExecute(
+      null,
+      [TypeMismatch::create('+', 0, 'number', [1, 2])],
+      ['+', ['list', 1, 2]]
+    );
   }
   public function test_nested()
   {
-    $this->assertSame(6, $this->s->execute(['+', ['+', 1, 2], ['+', 1, 2]]));
+    $this->testExecute(6, null, ['+', ['+', 1, 2], ['+', 1, 2]]);
   }
 }

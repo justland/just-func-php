@@ -4,6 +4,7 @@ namespace JustLand\JustFunc;
 
 class Equality
 {
+  const KEY = '==';
   /**
    * @param ExecutionContext $context
    * @param array $args

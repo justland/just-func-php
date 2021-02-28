@@ -4,6 +4,7 @@ namespace JustLand\JustFunc;
 
 class Multiply
 {
+  const KEY = '*';
   /**
    * @param ExecutionContext $context
    * @param array $args
