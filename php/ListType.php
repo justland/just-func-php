@@ -2,7 +2,7 @@
 
 namespace JustLand\JustFunc;
 
-class ListFn
+class ListType
 {
   const KEY = 'list';
   public static function invoke($context, $code) {

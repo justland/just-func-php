@@ -14,7 +14,7 @@ class Interpreter
     $this->context = new ExecutionContext([
       Not::KEY => Not::class,
       Equality::KEY => Equality::class,
-      ListFn::KEY => ListFn::class,
+      ListType::KEY => ListType::class,
       StringType::KEY => StringType::class,
       IfKeyword::KEY => IfKeyword::class,
       RatioType::KEY => RatioType::class,
