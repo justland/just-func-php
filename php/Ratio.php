@@ -39,6 +39,8 @@ class Ratio
       return $context->execute($v);
     }, $args);
 
+    if ($numerator === null || $denominator === null) return null;
+
     if (self::isRatio($numerator)) {
       return $context->execute(['ratio', $numerator[1], ['*', $numerator[2], $denominator]]);
     }

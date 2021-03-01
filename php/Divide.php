@@ -16,25 +16,36 @@ class Divide
       $context->addError(ArityMismatch::create('/', $args));
       return null;
     }
+
     $first = $context->execute($args[0]);
-    if ($first === 0) {
+    if ($c === 1) {
+      if ($first === 0) {
+        $context->addError(DivideByZero::create('/', $args));
+        return null;
+      }
+      if (!Number::isNumericForm($first)) {
+        $context->addError(TypeMismatch::create('/', 0, 'number', $first));
+        return null;
+      }
+      return Ratio::create($context, $args);
+    }
+    if (!Number::isNumericForm($first)) {
+      $context->addError(TypeMismatch::create('/', 0, 'number', $first));
+      return null;
+    }
+
+    $i = 1;
+    $denom = array_reduce(array_slice($args, 1), function ($p, $v) use ($context, $i) {
+      if ($p === null) return null;
+      $v = $context->execute($v);
+      if (Ratio::isRatio($v)) return $context->execute(['*', $p, $v]);
+      if (Number::isNumericOnly($v)) return $p * $v;
+      $context->addError(TypeMismatch::create('/', $i++, 'number', $v));
+    }, 1);
+    if ($denom === 0) {
       $context->addError(DivideByZero::create('/', $args));
       return null;
     }
-    if (!Number::isNumericForm($first)) return null;
-
-    if ($c === 1) {
-      return Ratio::create($context, $args);
-    }
-
-    array_shift($args);
-    $second = $context->execute(array_shift($args));
-    return Ratio::create($context, [
-      $first,
-      array_reduce($args, function ($p, $v) use ($context) {
-        $v = $context->execute($v);
-        if (Number::isNumericOnly($v)) return $p * $v;
-      }, $second)
-    ]);
+    return Ratio::create($context, [$first, $denom]);
   }
 }
