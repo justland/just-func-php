@@ -30,17 +30,17 @@ class Mod
       $context->addError(TypeMismatch::create('mod', 1, 'number', $denominator));
       return null;
     }
-    if (Ratio::isRatio($numerator)) {
-      if (Ratio::isRatio($denominator)) {
-        return Ratio::create($context, [
+    if (RatioType::isRatio($numerator)) {
+      if (RatioType::isRatio($denominator)) {
+        return RatioType::create($context, [
           ($numerator[1] * $denominator[2]) % ($denominator[1] * $numerator[2]),
           $numerator[2] * $denominator[2]
         ]);
       }
-      return Ratio::create($context, [$numerator[1] - $denominator * $numerator[2], $numerator[2]]);
+      return RatioType::create($context, [$numerator[1] - $denominator * $numerator[2], $numerator[2]]);
     }
-    if (Ratio::isRatio($denominator)) {
-      return Ratio::create($context, [$numerator * $denominator[2] % $denominator[1], $denominator[2]]);
+    if (RatioType::isRatio($denominator)) {
+      return RatioType::create($context, [$numerator * $denominator[2] % $denominator[1], $denominator[2]]);
     }
     return $numerator % $denominator;
   }

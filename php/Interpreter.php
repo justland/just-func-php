@@ -17,7 +17,7 @@ class Interpreter
       ListFn::KEY => ListFn::class,
       StringType::KEY => StringType::class,
       IfKeyword::KEY => IfKeyword::class,
-      Ratio::KEY => Ratio::class,
+      RatioType::KEY => RatioType::class,
       Add::KEY => Add::class,
       Subtract::KEY => Subtract::class,
       Multiply::KEY => Multiply::class,

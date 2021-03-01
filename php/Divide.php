@@ -27,7 +27,7 @@ class Divide
         $context->addError(TypeMismatch::create('/', 0, 'number', $first));
         return null;
       }
-      return Ratio::create($context, $args);
+      return RatioType::create($context, $args);
     }
     if (!Number::isNumericForm($first)) {
       $context->addError(TypeMismatch::create('/', 0, 'number', $first));
@@ -38,7 +38,7 @@ class Divide
     $denom = array_reduce(array_slice($args, 1), function ($p, $v) use ($context, $i) {
       if ($p === null) return null;
       $v = $context->execute($v);
-      if (Ratio::isRatio($v)) return $context->execute(['*', $p, $v]);
+      if (RatioType::isRatio($v)) return $context->execute(['*', $p, $v]);
       if (Number::isNumericOnly($v)) return $p * $v;
       $context->addError(TypeMismatch::create('/', $i++, 'number', $v));
     }, 1);
@@ -46,6 +46,6 @@ class Divide
       $context->addError(DivideByZero::create('/', $args));
       return null;
     }
-    return Ratio::create($context, [$first, $denom]);
+    return RatioType::create($context, [$first, $denom]);
   }
 }

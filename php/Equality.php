@@ -19,13 +19,13 @@ class Equality
     $p = $context->execute(array_shift($args));
     foreach ($args as $arg) {
       $v = $context->execute($arg);
-      if (Ratio::isRatio($p)) {
-        if (Ratio::isRatio($v)) {
+      if (RatioType::isRatio($p)) {
+        if (RatioType::isRatio($v)) {
           if ($p[1] * $v[2] !== $v[1] * $p[2]) return false;
         } else {
           return false;
         }
-      } else if (Ratio::isRatio($v)) {
+      } else if (RatioType::isRatio($v)) {
         return false;
       } else {
         if ($v !== $p) return false;

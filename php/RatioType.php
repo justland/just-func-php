@@ -2,7 +2,7 @@
 
 namespace JustLand\JustFunc;
 
-class Ratio
+class RatioType
 {
   const KEY = 'ratio';
   public static function isRatio($value)

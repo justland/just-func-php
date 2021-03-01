@@ -13,6 +13,6 @@ class Number
    */
   public static function isNumericForm($v)
   {
-    return self::isNumericOnly($v) || Ratio::isRatio($v);
+    return self::isNumericOnly($v) || RatioType::isRatio($v);
   }
 }
