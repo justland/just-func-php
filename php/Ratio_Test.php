@@ -61,4 +61,8 @@ class Ratio_Test extends InterpreterTestCase
   {
     $this->testEvaluate(['ratio', 3, 2], null, ['ratio', ['ratio', 2], ['ratio', 3]]);
   }
+  public function test_evaluate_to_number()
+  {
+    $this->testExecute(0.5, null, ['ratio', 1, 2]);
+  }
 }
