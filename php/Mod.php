@@ -22,11 +22,11 @@ class Mod
       $context->addError(DivideByZero::create('mod', $args));
       return null;
     }
-    if (!Number::isNumericForm($numerator)) {
+    if (!NumberType::isNumericForm($numerator)) {
       $context->addError(TypeMismatch::create('mod', 0, 'number', $numerator));
       return null;
     }
-    if (!Number::isNumericForm($denominator)) {
+    if (!NumberType::isNumericForm($denominator)) {
       $context->addError(TypeMismatch::create('mod', 1, 'number', $denominator));
       return null;
     }

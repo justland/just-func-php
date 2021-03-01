@@ -17,7 +17,7 @@ class Subtract
       return null;
     }
     $first = $context->execute(array_shift($args));
-    if (!Number::isNumericForm($first)) return null;
+    if (!NumberType::isNumericForm($first)) return null;
 
     if ($c === 1) {
       if (RatioType::isRatio($first)) {
@@ -39,7 +39,7 @@ class Subtract
       if (RatioType::isRatio($v)) {
         return RatioType::create($context, [$p * $v[2] - $v[1], $v[2]]);
       }
-      if (Number::isNumericOnly($v)) return $p - $v;
+      if (NumberType::isNumericOnly($v)) return $p - $v;
     }, $first);
   }
 }

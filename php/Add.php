@@ -24,7 +24,7 @@ class Add
       if (RatioType::isRatio($v)) {
         return RatioType::create($context, [$p * $v[2] + $v[1], $v[2]]);
       }
-      if (Number::isNumericOnly($v)) return $p + $v;
+      if (NumberType::isNumericOnly($v)) return $p + $v;
       $context->addError(TypeMismatch::create('+', $i++, 'number', $v));
     }, 0);
   }

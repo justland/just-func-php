@@ -23,13 +23,13 @@ class Divide
         $context->addError(DivideByZero::create('/', $args));
         return null;
       }
-      if (!Number::isNumericForm($first)) {
+      if (!NumberType::isNumericForm($first)) {
         $context->addError(TypeMismatch::create('/', 0, 'number', $first));
         return null;
       }
       return RatioType::create($context, $args);
     }
-    if (!Number::isNumericForm($first)) {
+    if (!NumberType::isNumericForm($first)) {
       $context->addError(TypeMismatch::create('/', 0, 'number', $first));
       return null;
     }
@@ -39,7 +39,7 @@ class Divide
       if ($p === null) return null;
       $v = $context->execute($v);
       if (RatioType::isRatio($v)) return $context->execute(['*', $p, $v]);
-      if (Number::isNumericOnly($v)) return $p * $v;
+      if (NumberType::isNumericOnly($v)) return $p * $v;
       $context->addError(TypeMismatch::create('/', $i++, 'number', $v));
     }, 1);
     if ($denom === 0) {

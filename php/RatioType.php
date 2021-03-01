@@ -56,4 +56,8 @@ class RatioType
   {
     return $code[1] / $code[2];
   }
+
+  public static function op($context, $op, $args) {
+
+  }
 }

@@ -2,7 +2,7 @@
 
 namespace JustLand\JustFunc;
 
-class Number
+class NumberType
 {
   public static function isNumericOnly($v)
   {
