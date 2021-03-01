@@ -15,6 +15,8 @@ class Interpreter
       Not::KEY => Not::class,
       Equality::KEY => Equality::class,
       ListFn::KEY => ListFn::class,
+      StringType::KEY => StringType::class,
+      IfKeyword::KEY => IfKeyword::class,
       Ratio::KEY => Ratio::class,
       Add::KEY => Add::class,
       Subtract::KEY => Subtract::class,
