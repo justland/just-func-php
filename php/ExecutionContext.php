@@ -37,18 +37,17 @@ class ExecutionContext
   {
     return count($this->errors) ? $this->errors : null;
   }
-
   public function execute($code)
   {
     if (!is_array($code)) return self::literal($code);
     if (count($code) === 0) return null;
-    $fn = array_shift($code);
-    if (!isset($this->handlers[$fn])) {
-      $this->addError(UnknownSymbol::create($fn, $code));
+    $op = array_shift($code);
+    if (!isset($this->handlers[$op])) {
+      $this->addError(UnknownSymbol::create($op, $code));
       return null;
     }
 
-    $handler = $this->handlers[$fn];
+    $handler = $this->handlers[$op];
     if ($handler) {
       if (is_string($handler)) {
         return call_user_func_array([$handler, 'invoke'], [$this, $code]);
@@ -68,6 +67,12 @@ class ExecutionContext
       return call_user_func_array([$handler, 'unbox'], [$this, $code]);
     }
     return $code;
+  }
+
+  public function handle($op, $subject, $args)
+  {
+    if (NumberType::is($subject)) return NumberType::handle($this, $op, $subject, $args);
+    if (BooleanType::is($subject)) return BooleanType::handle($this, $op, $subject, $args);
   }
 
   private static function literal($code)
