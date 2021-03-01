@@ -11,6 +11,11 @@ class Add
    */
   public static function invoke($context, $args)
   {
+    // if (count($args) === 0) return 0;
+
+    // $subject = array_shift($args);
+    // return $context->handle(self::KEY, $subject, $args);
+
     $i = 0;
     return array_reduce($args, function ($p, $v) use ($context, $i) {
       $v = $context->execute($v);
@@ -24,7 +29,7 @@ class Add
       if (RatioType::isRatio($v)) {
         return RatioType::create($context, [$p * $v[2] + $v[1], $v[2]]);
       }
-      if (NumberType::isNumericOnly($v)) return $p + $v;
+      if (NumberType::is($v)) return $p + $v;
       $context->addError(TypeMismatch::create('+', $i++, 'number', $v));
     }, 0);
   }

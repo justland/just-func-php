@@ -39,7 +39,7 @@ class Divide
       if ($p === null) return null;
       $v = $context->execute($v);
       if (RatioType::isRatio($v)) return $context->execute(['*', $p, $v]);
-      if (NumberType::isNumericOnly($v)) return $p * $v;
+      if (NumberType::is($v)) return $p * $v;
       $context->addError(TypeMismatch::create('/', $i++, 'number', $v));
     }, 1);
     if ($denom === 0) {

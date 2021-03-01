@@ -39,7 +39,7 @@ class Subtract
       if (RatioType::isRatio($v)) {
         return RatioType::create($context, [$p * $v[2] - $v[1], $v[2]]);
       }
-      if (NumberType::isNumericOnly($v)) return $p - $v;
+      if (NumberType::is($v)) return $p - $v;
     }, $first);
   }
 }
