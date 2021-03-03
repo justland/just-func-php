@@ -47,7 +47,7 @@ class Interpreter
    */
   public function evaluate($code)
   {
-    $this->context->resetErrors();
+    $this->context->reset();
     return [
       $this->context->execute($code),
       $this->context->getErrors()

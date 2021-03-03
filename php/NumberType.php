@@ -13,7 +13,7 @@ class NumberType
    */
   public static function isNumericForm($v)
   {
-    return self::is($v) || RatioType::isRatio($v);
+    return self::is($v) || RatioType::is($v);
   }
 
   /**

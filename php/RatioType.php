@@ -5,7 +5,7 @@ namespace JustLand\JustFunc;
 class RatioType
 {
   const KEY = 'ratio';
-  public static function isRatio($value)
+  public static function is($value)
   {
     return is_array($value) && count($value) > 0 && $value[0] === 'ratio';
   }
@@ -41,10 +41,10 @@ class RatioType
 
     if ($numerator === null || $denominator === null) return null;
 
-    if (self::isRatio($numerator)) {
+    if (self::is($numerator)) {
       return $context->execute(['ratio', $numerator[1], ['*', $numerator[2], $denominator]]);
     }
-    if (self::isRatio($denominator)) {
+    if (self::is($denominator)) {
       return $context->execute(['ratio', ['*', $numerator, $denominator[2]], $denominator[1]]);
     }
     $remainder = $numerator % $denominator;

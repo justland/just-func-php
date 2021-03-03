@@ -20,7 +20,7 @@ class Subtract
     if (!NumberType::isNumericForm($first)) return null;
 
     if ($c === 1) {
-      if (RatioType::isRatio($first)) {
+      if (RatioType::is($first)) {
         $first[1] = -$first[1];
         return $first;
       }
@@ -29,14 +29,14 @@ class Subtract
 
     return array_reduce($args, function ($p, $v) use ($context) {
       $v = $context->execute($v);
-      if (RatioType::isRatio($p)) {
-        if (RatioType::isRatio($v)) {
+      if (RatioType::is($p)) {
+        if (RatioType::is($v)) {
           return RatioType::create($context, [$p[1] * $v[2] - $v[1] * $p[2], $p[2] * $v[2]]);
         } else {
           return RatioType::create($context, [$p[1] - $v * $p[2], $p[2]]);
         }
       }
-      if (RatioType::isRatio($v)) {
+      if (RatioType::is($v)) {
         return RatioType::create($context, [$p * $v[2] - $v[1], $v[2]]);
       }
       if (NumberType::is($v)) return $p - $v;

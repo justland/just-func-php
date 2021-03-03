@@ -18,7 +18,7 @@ class BooleanType
   {
     switch ($op) {
       case Add::KEY:
-        $context->addError(TypeMismatch::create('+', $context->argPosition, 'number', $subject));
+        $context->addError(TypeMismatch::create('+', 0, 'number', $subject));
         return null;
     }
   }

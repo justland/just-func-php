@@ -9,6 +9,8 @@ class ExecutionContext
    */
   private $errors = [];
 
+  private $stack;
+
   /**
    * @var array
    */
@@ -19,8 +21,9 @@ class ExecutionContext
     $this->handlers = $handlers;
   }
 
-  public function resetErrors()
+  public function reset()
   {
+    $this->stack = null;
     $this->errors = [];
   }
 
@@ -37,6 +40,7 @@ class ExecutionContext
   {
     return count($this->errors) ? $this->errors : null;
   }
+
   public function execute($code)
   {
     if (!is_array($code)) return self::literal($code);
@@ -46,17 +50,18 @@ class ExecutionContext
       $this->addError(UnknownSymbol::create($op, $code));
       return null;
     }
+    $this->pushStack($op, $code);
 
     $handler = $this->handlers[$op];
-    if ($handler) {
-      if (is_string($handler)) {
-        return call_user_func_array([$handler, 'invoke'], [$this, $code]);
-      }
-      if (is_array($handler)) {
-        return call_user_func_array($handler, [$this, $code]);
-      }
-      return $handler($this, $code);
+    if (is_string($handler)) {
+      $result = call_user_func_array([$handler, 'invoke'], [$this, $code]);
+    } else if (is_array($handler)) {
+      $result = call_user_func_array($handler, [$this, $code]);
+    } else {
+      $result = $handler($this, $code);
     }
+    $this->popStack();
+    return $result;
   }
 
   public function unbox($code)
@@ -69,14 +74,30 @@ class ExecutionContext
     return $code;
   }
 
-  public function handle($op, $subject, $args)
-  {
-    if (NumberType::is($subject)) return NumberType::handle($this, $op, $subject, $args);
-    if (BooleanType::is($subject)) return BooleanType::handle($this, $op, $subject, $args);
-  }
+  // public function handle($op, $subject, $args)
+  // {
+  //   if (NumberType::is($subject)) return NumberType::handle($this, $op, $subject, $args);
+  //   if (BooleanType::is($subject)) return BooleanType::handle($this, $op, $subject, $args);
+  //   if (StringType::is($subject)) return StringType::handle($this, $op, $subject, $args);
+  //   if (NullType::is($subject)) return NullType::handle($this, $op, $subject, $args);
+  // }
 
   private static function literal($code)
   {
     return $code;
+  }
+
+  private function pushStack($op, $args)
+  {
+    $this->stack = [
+      'parent' => $this->stack,
+      'store' => [],
+      'op' => $op,
+      'args' => $args
+    ];
+  }
+  private function popStack()
+  {
+    $this->stack = $this->stack['parent'];
   }
 }

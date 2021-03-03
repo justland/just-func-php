@@ -4,14 +4,14 @@ namespace JustLand\JustFunc;
 
 class RatioType_Test extends InterpreterTestCase
 {
-  public function test_isRatio()
+  public function test_is()
   {
-    $this->assertTrue(RatioType::isRatio(['ratio', 1]));
-    $this->assertFalse(RatioType::isRatio(0));
-    $this->assertFalse(RatioType::isRatio(1.0));
-    $this->assertFalse(RatioType::isRatio(null));
-    $this->assertFalse(RatioType::isRatio(true));
-    $this->assertFalse(RatioType::isRatio('1'));
+    $this->assertTrue(RatioType::is(['ratio', 1]));
+    $this->assertFalse(RatioType::is(0));
+    $this->assertFalse(RatioType::is(1.0));
+    $this->assertFalse(RatioType::is(null));
+    $this->assertFalse(RatioType::is(true));
+    $this->assertFalse(RatioType::is('1'));
   }
 
   public function test_requires_at_least_one_arg()

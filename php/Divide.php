@@ -38,7 +38,7 @@ class Divide
     $denom = array_reduce(array_slice($args, 1), function ($p, $v) use ($context, $i) {
       if ($p === null) return null;
       $v = $context->execute($v);
-      if (RatioType::isRatio($v)) return $context->execute(['*', $p, $v]);
+      if (RatioType::is($v)) return $context->execute(['*', $p, $v]);
       if (NumberType::is($v)) return $p * $v;
       $context->addError(TypeMismatch::create('/', $i++, 'number', $v));
     }, 1);
