@@ -49,10 +49,4 @@ class Add_Test extends InterpreterTestCase
     $this->testExecute(6, null, ['+', ['+', 1, 2], ['+', 1, 2]]);
   }
 
-  public function test_ratio()
-  {
-    $this->testEvaluate(['ratio', 6, 5], null, ['+', 1, ['ratio', 1, 5]]);
-    $this->testEvaluate(['ratio', 9, 2], null, ['+', ['ratio', 3, 2], 3]);
-    $this->testEvaluate(['ratio', 17, 10], null, ['+', ['ratio', 3, 2], ['ratio', 1, 5]]);
-  }
 }

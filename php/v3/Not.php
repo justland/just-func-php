@@ -2,7 +2,7 @@
 
 namespace JustLand\JustFunc\v3;
 
-class Not extends Operator implements IModule, IOperator
+class Not extends Operator implements IModule
 {
   const KEY = 'not';
 

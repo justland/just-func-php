@@ -17,6 +17,11 @@ abstract class Operator implements IOperator
     return $this->handleParsedArgs($context, $op, $args);
   }
 
+  public function missingSignature($context, $signature, $op, $args)
+  {
+    $context->addError(SignatureNotSupported::create($signature, $op, $args));
+  }
+
   protected function handleParsedArgs($context, $op, $args)
   {
     $handler = $this->getSignatureHandler($context, $op, $args);

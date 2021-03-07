@@ -66,7 +66,7 @@ class ExecutionContext
   {
     if (is_array($code)) {
       $type = $code[0];
-      $handler = $this->handlers[$type];
+      $handler = $this->resolver->getType($type);
       return call_user_func_array([$handler, 'unbox'], [$this, $code]);
     }
     return $code;

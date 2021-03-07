@@ -16,12 +16,19 @@ class Resolver
   private $ops = [];
 
   /**
+   * @var IType[]
+   */
+  private $types = [];
+
+  /**
    * @param IModule[] $modules
    */
   public function __construct($analyzer, $modules = [])
   {
     $this->analyzer = $analyzer;
+    array_unshift($modules, new MathModule());
     array_unshift($modules, new Not());
+    array_unshift($modules, new CoreModule());
 
     foreach ($modules as $m) {
       $m->register($this);
@@ -64,6 +71,13 @@ class Resolver
     $this->ops[$op] = $instance;
   }
 
+  public function defineType($type, $instance)
+  {
+    // Type is always also an operator
+    $this->ops[$type] = $instance;
+    $this->types[$type] = $instance;
+  }
+
   /**
    * Define additional signatures for specified `$op`.
    * This is used by types to add function overloads to specific operators.
@@ -88,5 +102,11 @@ class Resolver
   {
     if (isset($this->ops[$op])) return $this->ops[$op];
     $this->analyzer->addError(UnknownSymbol::create($op));
+  }
+
+  public function getType($type)
+  {
+    if (isset($this->types[$type])) return $this->types[$type];
+    $this->analyzer->addError(UnknownSymbol::create($type));
   }
 }

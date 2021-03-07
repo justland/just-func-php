@@ -2,9 +2,7 @@
 
 namespace JustLand\JustFunc\v3;
 
-interface IType
+interface IType extends IOperator
 {
   public function unbox($context, $code);
-
-  public function handle($context, $fn, $args);
 }
