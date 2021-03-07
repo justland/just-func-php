@@ -18,13 +18,15 @@ class Not extends Operator implements IModule, IOperator
     );
   }
 
-  public function handle($context, $op, $args)
+  public function handle($context, $op, $rawArgs)
   {
-    if (count($args) !== 1) {
-      $context->addError(ArityMismatch::create($op, $args));
+    if (count($rawArgs) !== 1) {
+      $context->addError(ArityMismatch::create($op, $rawArgs));
       return null;
     }
-    return parent::handle($context, $op, $args);
+    $args = array_map([$context, 'execute'], $rawArgs);
+
+    return parent::handleParsedArgs($context, $op, $args);
   }
 
   public function missingSignature($context, $signature, $op, $args)

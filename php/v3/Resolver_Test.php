@@ -10,6 +10,11 @@ class SubjectOp extends Operator implements IModule, IOperator
   {
     $resolver->defineOperator('subject', $this);
   }
+  public function handle($context, $op, $rawArgs)
+  {
+    $args = array_map([$context, 'execute'], $rawArgs);
+    return parent::handleParsedArgs($context, $op, $args);
+  }
   public function missingSignature($context, $signature, $op, $args)
   {
   }

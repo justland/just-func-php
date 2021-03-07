@@ -54,13 +54,9 @@ class ExecutionContext
     $handler = $this->resolver->getOperatorHandler($op);
     if (!$handler) return null;
 
-    $args = array_map(function ($code) {
-      return $this->execute($code);
-    }, $code);
-
     try {
-      $this->pushStack($op, $args);
-      return $handler->handle($this, $op, $args);
+      $this->pushStack($op, $code);
+      return $handler->handle($this, $op, $code);
     } finally {
       $this->popStack();
     }

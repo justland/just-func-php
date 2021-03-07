@@ -10,7 +10,8 @@ abstract class Operator implements IOperator
   {
     $this->signatures[$signature['key']] = [$signature, $handler];
   }
-  public function handle($context, $op, $args)
+
+  protected function handleParsedArgs($context, $op, $args)
   {
     $handler = $this->getSignatureHandler($context, $op, $args);
     return $handler ? $handler($context, $op, $args) : null;

@@ -14,10 +14,10 @@ interface IOperator
    * Handles the call.
    * @param ExecutionContext $context
    * @param string $op
-   * @param array $args
+   * @param array $rawArgs
    * @return array|null returns null if the `$rawArgs` is not valid.
    */
-  public function handle($context, $op, $args);
+  public function handle($context, $op, $rawArgs);
 
   /**
    * Populate corresponding error when there is no handler for the particular function signature.
