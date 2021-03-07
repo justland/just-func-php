@@ -4,16 +4,11 @@ namespace JustLand\JustFunc\v3;
 
 use PHPUnit\Framework\TestCase;
 
-class SubjectOp implements IModule, IOperator
+class SubjectOp extends Operator implements IModule, IOperator
 {
-  use OperatorTrait;
   public function register($resolver): void
   {
     $resolver->defineOperator('subject', $this);
-  }
-  public function prepareArgs($context, $op, $rawArgs)
-  {
-    return $rawArgs;
   }
   public function missingSignature($context, $signature, $op, $args)
   {
@@ -25,27 +20,26 @@ class Resolver_Test extends TestCase
   public function test_signature_function_handler_returns_as_is()
   {
     $s = new SubjectOp();
-    list($r) = $this->createTestResolver([$s]);
+    list($r,, $c) = $this->createTestResolver([$s]);
     $handler = function () {
+      return 'local';
     };
     $r->defineSignature('subject', [], $handler);
-    $this->assertSame($handler, $s->getSignatureHandler('(subject)'));
+    $this->assertEquals('local', $s->handle($c, 'subject', []));
   }
   public function test_signature_static_method()
   {
     $s = new SubjectOp();
-    list($r) = $this->createTestResolver([$s]);
+    list($r,, $c) = $this->createTestResolver([$s]);
     $r->defineSignature('subject', [], [Resolver_Test::class, 'staticHandler']);
-    $h = $s->getSignatureHandler('(subject)');
-    $this->assertEquals('static', $h());
+    $this->assertEquals('static', $s->handle($c, 'subject', []));
   }
   public function test_signature_instance_method()
   {
     $s = new SubjectOp();
-    list($r) = $this->createTestResolver([$s]);
+    list($r,, $c) = $this->createTestResolver([$s]);
     $r->defineSignature('subject', [], [$this, 'instanceHandler']);
-    $h = $s->getSignatureHandler('(subject)');
-    $this->assertEquals('instance', $h());
+    $this->assertEquals('instance', $s->handle($c, 'subject', []));
   }
   public function test_defineSignature_on_not_exist_operator()
   {
@@ -71,6 +65,7 @@ class Resolver_Test extends TestCase
   {
     $analyzer = new Analyzer();
     $resolver = new Resolver($analyzer, $modules);
-    return [$resolver, $analyzer];
+    $context = new ExecutionContext($analyzer, $resolver);
+    return [$resolver, $analyzer, $context];
   }
 }

@@ -11,18 +11,13 @@ interface IOperator
   public function addSignatureHandler($signature, $handler);
 
   /**
-   * Prepare the arguments to be used by signature handler.
+   * Handles the call.
    * @param ExecutionContext $context
    * @param string $op
-   * @param array $rawArgs
+   * @param array $args
    * @return array|null returns null if the `$rawArgs` is not valid.
    */
-  public function prepareArgs($context, $op, $rawArgs);
-
-  /**
-   * @param string $signature
-   */
-  public function getSignatureHandler($signature);
+  public function handle($context, $op, $args);
 
   /**
    * Populate corresponding error when there is no handler for the particular function signature.

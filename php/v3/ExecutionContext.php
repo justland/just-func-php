@@ -51,25 +51,16 @@ class ExecutionContext
     if (!is_array($code)) return $code;
     if (count($code) === 0) return null;
     $op = array_shift($code);
-    $opHandler = $this->resolver->getOperatorHandler($op);
-    if (!$opHandler) {
-      $this->addError(UnknownSymbol::create($op));
-      return null;
-    }
+    $handler = $this->resolver->getOperatorHandler($op);
+    if (!$handler) return null;
 
-    $args = $opHandler->prepareArgs($this, $op, $code);
-    if (!$args) return null;
-
-    $signature = JustType::getSignature($op, $args);
-    $handler = $opHandler->getSignatureHandler($signature['key']);
-    if (!$handler) {
-      $opHandler->missingSignature($this, $signature, $op, $args);
-      return null;
-    }
+    $args = array_map(function ($code) {
+      return $this->execute($code);
+    }, $code);
 
     try {
       $this->pushStack($op, $args);
-      return $handler($this, $op, $args);
+      return $handler->handle($this, $op, $args);
     } finally {
       $this->popStack();
     }

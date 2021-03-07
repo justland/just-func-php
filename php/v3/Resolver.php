@@ -74,10 +74,7 @@ class Resolver
   public function defineSignature($op, $argTypes, $handler)
   {
     $opHandler = $this->getOperatorHandler($op);
-    if (!$opHandler) {
-      $this->analyzer->addError(UnknownSymbol::create($op));
-      return;
-    }
+    if (!$opHandler) return;
     $opHandler->addSignatureHandler(
       JustType::buildSignature($op, $argTypes),
       $handler
@@ -89,6 +86,7 @@ class Resolver
    */
   public function getOperatorHandler($op)
   {
-    return isset($this->ops[$op]) ? $this->ops[$op] : null;
+    if (isset($this->ops[$op])) return $this->ops[$op];
+    $this->analyzer->addError(UnknownSymbol::create($op));
   }
 }

@@ -2,11 +2,9 @@
 
 namespace JustLand\JustFunc\v3;
 
-class Not implements IModule, IOperator
+class Not extends Operator implements IModule, IOperator
 {
   const KEY = 'not';
-
-  use OperatorTrait;
 
   /**
    * @param Resolver $resolver
@@ -20,15 +18,13 @@ class Not implements IModule, IOperator
     );
   }
 
-  public function prepareArgs($context, $op, $rawArgs)
+  public function handle($context, $op, $args)
   {
-    if (count($rawArgs) !== 1) {
-      $context->addError(ArityMismatch::create(self::KEY, $rawArgs));
+    if (count($args) !== 1) {
+      $context->addError(ArityMismatch::create(self::KEY, $args));
       return null;
     }
-    return array_map(function ($arg) use ($context) {
-      return $context->execute($arg);
-    }, $rawArgs);
+    return parent::handle($context, $op, $args);
   }
 
   public function missingSignature($context, $signature, $op, $args)
