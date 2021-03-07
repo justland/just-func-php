@@ -13,8 +13,9 @@ class Resolver
   /**
    * @param IModule[] $modules
    */
-  public function __construct($modules = [])
+  public function __construct($analyzer, $modules = [])
   {
+    $this->analyzer = $analyzer;
     array_unshift($modules, new Not());
 
     foreach ($modules as $m) {
@@ -68,8 +69,10 @@ class Resolver
   public function defineSignature($op, $argTypes, $handler)
   {
     $opHandler = $this->getOperatorHandler($op);
-    $signature = JustType::buildSignature($op, $argTypes);
-    $opHandler->addSignatureHandler($signature, $handler);
+    $opHandler->addSignatureHandler(
+      JustType::buildSignature($op, $argTypes),
+      $handler
+    );
   }
 
   /**

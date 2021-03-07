@@ -10,11 +10,13 @@ class Interpreter
   private $context;
 
   /**
-   * @param ModuleResolver $resolver
+   * @param IModule[] $modules
    */
-  public function __construct($resolver)
+  public function __construct($modules = [])
   {
-    $this->context = new ExecutionContext($resolver);
+    $analyzer = new Analyzer();
+    $resolver = new Resolver($analyzer, $modules);
+    $this->context = new ExecutionContext($analyzer, $resolver);
   }
 
   /**

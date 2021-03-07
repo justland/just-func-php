@@ -25,7 +25,7 @@ class Resolver_Test extends TestCase
   public function test_signature_function_handler_returns_as_is()
   {
     $s = new SubjectOp();
-    $r = new Resolver([$s]);
+    list($r) = $this->createTestResolver([$s]);
     $handler = function () {
     };
     $r->defineSignature('subject', [], $handler);
@@ -34,7 +34,7 @@ class Resolver_Test extends TestCase
   public function test_signature_static_method()
   {
     $s = new SubjectOp();
-    $r = new Resolver([$s]);
+    list($r) = $this->createTestResolver([$s]);
     $r->defineSignature('subject', [], [Resolver_Test::class, 'staticHandler']);
     $h = $s->getSignatureHandler('(subject)');
     $this->assertEquals('static', $h());
@@ -42,10 +42,15 @@ class Resolver_Test extends TestCase
   public function test_signature_instance_method()
   {
     $s = new SubjectOp();
-    $r = new Resolver([$s]);
+    list($r) = $this->createTestResolver([$s]);
     $r->defineSignature('subject', [], [$this, 'instanceHandler']);
     $h = $s->getSignatureHandler('(subject)');
     $this->assertEquals('instance', $h());
+  }
+  public function skip_test_defineSignature_on_not_exist_operator()
+  {
+    list($r) = $this->createTestResolver();
+    $r->defineSignature('something-not-exist', [], 'instanceHandler');
   }
 
   public function instanceHandler()
@@ -56,5 +61,12 @@ class Resolver_Test extends TestCase
   public static function staticHandler()
   {
     return 'static';
+  }
+
+  private function createTestResolver($modules = [])
+  {
+    $analyzer = new Analyzer();
+    $resolver = new Resolver($analyzer, $modules);
+    return [$resolver, $analyzer];
   }
 }

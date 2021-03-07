@@ -5,9 +5,9 @@ namespace JustLand\JustFunc\v3;
 class ExecutionContext
 {
   /**
-   * @var array Contains the error information about the execution.
+   * @var Analyzer
    */
-  private $errors = [];
+  private $analyzer;
 
   private $stack;
 
@@ -17,22 +17,24 @@ class ExecutionContext
   private $resolver;
 
   /**
-   * @param Resolver
+   * @param Analyzer $analyzer
+   * @param Resolver $resolver
    */
-  public function __construct($resolver)
+  public function __construct($analyzer, $resolver)
   {
+    $this->analyzer = $analyzer;
     $this->resolver = $resolver;
   }
 
   public function reset()
   {
     $this->stack = null;
-    $this->errors = [];
+    $this->analyzer->reset();
   }
 
   public function addError($errorInfo)
   {
-    array_push($this->errors, $errorInfo);
+    $this->analyzer->addError($errorInfo);
   }
 
   /**
@@ -41,7 +43,7 @@ class ExecutionContext
    */
   public function getErrors()
   {
-    return count($this->errors) ? $this->errors : null;
+    return $this->analyzer->getErrors();
   }
 
   public function execute($code)

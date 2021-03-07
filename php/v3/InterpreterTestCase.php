@@ -14,7 +14,7 @@ class InterpreterTestCase extends TestCase
   protected function setUp(): void
   {
     parent::setUp();
-    $this->s = new Interpreter(new Resolver());
+    $this->s = new Interpreter();
   }
 
   protected function testExecute($expectedResult, $expectedErrors, $code)
