@@ -24,9 +24,8 @@ class Not extends Operator implements IModule, IOperator
       $context->addError(ArityMismatch::create($op, $rawArgs));
       return null;
     }
-    $args = array_map([$context, 'execute'], $rawArgs);
 
-    return parent::handleParsedArgs($context, $op, $args);
+    return parent::handle($context, $op, $rawArgs);
   }
 
   public function missingSignature($context, $signature, $op, $args)
