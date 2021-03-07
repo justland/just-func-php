@@ -5,6 +5,11 @@ namespace JustLand\JustFunc\v3;
 class Resolver
 {
   /**
+   * @var Analyzer
+   */
+  private $analyzer;
+
+  /**
    * ['+' => add, '==' => equality]
    * @var IOperator[]
    */
@@ -69,6 +74,10 @@ class Resolver
   public function defineSignature($op, $argTypes, $handler)
   {
     $opHandler = $this->getOperatorHandler($op);
+    if (!$opHandler) {
+      $this->analyzer->addError(UnknownSymbol::create($op));
+      return;
+    }
     $opHandler->addSignatureHandler(
       JustType::buildSignature($op, $argTypes),
       $handler

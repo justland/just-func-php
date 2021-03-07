@@ -47,10 +47,14 @@ class Resolver_Test extends TestCase
     $h = $s->getSignatureHandler('(subject)');
     $this->assertEquals('instance', $h());
   }
-  public function skip_test_defineSignature_on_not_exist_operator()
+  public function test_defineSignature_on_not_exist_operator()
   {
-    list($r) = $this->createTestResolver();
+    list($r, $a) = $this->createTestResolver();
     $r->defineSignature('something-not-exist', [], 'instanceHandler');
+    $this->assertEquals(
+      [UnknownSymbol::create('something-not-exist')],
+      $a->getErrors()
+    );
   }
 
   public function instanceHandler()
