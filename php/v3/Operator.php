@@ -12,18 +12,15 @@ abstract class Operator implements IOperator
   }
   public function handle($context, $op, $args)
   {
-    $signature = JustType::getSignature($op, $args);
-    $handler = $this->getSignatureHandler($signature);
-    if (!$handler) {
-      $context->addError(SignatureNotSupported::create($signature, $op, $args));
-      return null;
-    }
-    return $handler($context, $op, $args);
+    $handler = $this->getSignatureHandler($context, $op, $args);
+    return $handler ? $handler($context, $op, $args) : null;
   }
 
-  private function getSignatureHandler($signature)
+  private function getSignatureHandler($context, $op, $args)
   {
+    $signature = JustType::getSignature($op, $args);
     $key = $signature['key'];
-    return isset($this->signatures[$key]) ? $this->signatures[$key][1] : null;
+    if (isset($this->signatures[$key])) return $this->signatures[$key][1];
+    $context->addError(SignatureNotSupported::create($signature, $op, $args));
   }
 }

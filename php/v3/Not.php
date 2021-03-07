@@ -21,7 +21,7 @@ class Not extends Operator implements IModule, IOperator
   public function handle($context, $op, $args)
   {
     if (count($args) !== 1) {
-      $context->addError(ArityMismatch::create(self::KEY, $args));
+      $context->addError(ArityMismatch::create($op, $args));
       return null;
     }
     return parent::handle($context, $op, $args);
@@ -33,11 +33,6 @@ class Not extends Operator implements IModule, IOperator
       $context->addError(ArityMismatch::create(self::KEY, $args));
     else
       $context->addError(SignatureNotSupported::create($signature, $op, $args));
-  }
-
-  public function is($value): bool
-  {
-    return JustType::is(Not::KEY, $value);
   }
 
   public function handleBoolean($context, $op, $args)
