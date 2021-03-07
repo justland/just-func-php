@@ -12,7 +12,13 @@ class JustType
   public static function getType($value)
   {
     // No empty array should reach here.
-    return is_array($value) ? $value[0] : gettype($value);
+    if (is_array($value)) return $value[0];
+
+    $t = gettype($value);
+    switch ($t) {
+      case 'double': return 'number';
+      default: return $t;
+    }
   }
 
   public static function getSignature($op, $args)

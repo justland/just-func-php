@@ -33,6 +33,33 @@ class JustType_Test extends TestCase
     ], 'not', []);
   }
 
+  public function test_getSignature_integer_arg()
+  {
+    $this->testGetSignature([
+      'key' => '(+ integer)',
+      'op' => '+',
+      'argTypes' => ['integer']
+    ], '+', [1]);
+  }
+
+  public function test_getSignature_number_arg()
+  {
+    $this->testGetSignature([
+      'key' => '(+ number)',
+      'op' => '+',
+      'argTypes' => ['number']
+    ], '+', [1.1]);
+  }
+
+  public function test_getSignature_boolean_arg()
+  {
+    $this->testGetSignature([
+      'key' => '(+ boolean boolean)',
+      'op' => '+',
+      'argTypes' => ['boolean', 'boolean']
+    ], '+', [true, false]);
+  }
+
   private function testGetSignature($expected, $op, $args)
   {
     $this->assertEquals($expected, JustType::getSignature($op, $args));
