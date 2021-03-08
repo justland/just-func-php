@@ -38,4 +38,9 @@ class JustType
       'argTypes' => $argTypes
     ];
   }
+
+  public static function buildSignatureKey($op, $argTypes)
+  {
+
+  }
 }
