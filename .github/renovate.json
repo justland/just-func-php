@@ -1,4 +1,43 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>unional/renovate-preset"]
+  "description": [
+    "Policy is set explicitly here rather than inherited from",
+    "github>unional/renovate-preset. As of 2026-09-01 that preset publishes only",
+    "{extends: [config:base, :preserveSemverRanges]} -- no automerge, no release-age",
+    "soak, no packageRules -- and config:base is Renovate's deprecated name for",
+    "config:recommended. Extending it produced dependency PRs that never merged.",
+    "Exit condition: once unional/renovate-preset publishes the baseline policy,",
+    "collapse this file back to a single extends of that preset."
+  ],
+  "extends": [
+    "config:recommended",
+    ":preserveSemverRanges",
+    ":semanticCommits"
+  ],
+  "minimumReleaseAge": "3 days",
+  "platformAutomerge": true,
+  "rebaseWhen": "auto",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "matchDepTypes": ["require-dev", "devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "additionalBranchPrefix": "major-"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": "1 day",
+    "automerge": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  }
 }
