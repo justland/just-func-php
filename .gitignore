@@ -56,3 +56,6 @@ build/Release
 # project folders
 .ts
 lib*
+
+# phplint (guard: v9 defaults here when cache-dir is unset)
+.phplint.cache

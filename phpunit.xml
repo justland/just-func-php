@@ -1,19 +1,10 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  cacheResultFile=".php/phpunit.result.cache"
-  colors="true"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit cacheDirectory=".php/phpunit"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd">
   <coverage>
-    <include>
-      <directory suffix=".php">php</directory>
-    </include>
-    <exclude>
-      <directory suffix="_Test.php">php</directory>
-    </exclude>
     <report>
       <html outputDirectory=".php/coverage"/>
-      <text outputFile="php://stdout"
-        showOnlySummary="true"/>
+      <text outputFile="php://stdout" showOnlySummary="true"/>
     </report>
   </coverage>
   <testsuites>
@@ -22,4 +13,12 @@
     </testsuite>
   </testsuites>
   <logging/>
+  <source>
+    <include>
+      <directory suffix=".php">php</directory>
+    </include>
+    <exclude>
+      <directory suffix="_Test.php">php</directory>
+    </exclude>
+  </source>
 </phpunit>
