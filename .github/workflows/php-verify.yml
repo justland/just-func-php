@@ -1,0 +1,50 @@
+name: php-verify
+
+on:
+  workflow_call:
+    inputs:
+      php-versions:
+        description: JSON array of PHP versions to verify against.
+        type: string
+        default: '["8.0", "8.1"]'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ${{ fromJSON(inputs.php-versions) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
+          tools: composer:v2
+
+      - id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-php${{ matrix.php }}-
+
+      - run: composer install --no-interaction --no-progress --prefer-dist
+
+      - run: composer verify
+
+  all-checks:
+    # Single aggregate context so branch protection has one stable name to require,
+    # independent of how the matrix above is shaped.
+    if: always()
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail unless every verify job succeeded
+        run: |
+          echo "verify: ${{ needs.verify.result }}"
+          [ "${{ needs.verify.result }}" = "success" ]
