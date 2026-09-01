@@ -3,6 +3,9 @@
   "description": "just-func language support in PHP",
   "type": "library",
   "license": "MIT",
+  "require": {
+    "php": "^8.2"
+  },
   "authors": [
     {
       "name": "unional",
@@ -10,6 +13,9 @@
     }
   ],
   "config": {
+    "platform": {
+      "php": "8.2.0"
+    },
     "process-timeout": 0
   },
   "scripts": {
@@ -29,8 +35,8 @@
     }
   },
   "require-dev": {
-    "overtrue/phplint": "^1.1",
-    "phpunit/phpunit": "^9.5",
-    "spatie/phpunit-watcher": "^1.23"
+    "overtrue/phplint": "^9.6",
+    "phpunit/phpunit": "^11.5",
+    "spatie/phpunit-watcher": "^1.24"
   }
 }

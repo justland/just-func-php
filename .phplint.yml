@@ -1,6 +1,6 @@
 path:
   - ./php
-cache: .php/phplint.cache
+cache-dir: .php/phplint.cache
 extensions:
   - php
 exclude:
