@@ -6,7 +6,10 @@ on:
       php-versions:
         description: JSON array of PHP versions to verify against.
         type: string
-        default: '["8.0", "8.1"]'
+        # PHP 8.0 is the only version the 2021-era locked toolchain resolves on:
+        # phpunit 9.5.2 pulls phpspec/prophecy 1.12.2, which rejects PHP 8.1.
+        # Widened by the toolchain modernization that follows this PR.
+        default: '["8.0"]'
 
 jobs:
   verify:
