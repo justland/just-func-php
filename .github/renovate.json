@@ -19,15 +19,32 @@
   "rebaseWhen": "auto",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "description": "phpunit 12+ requires PHP >=8.3 and 13 requires >=8.4.1; this library supports ^8.2. Lift when the minimum PHP is raised.",
+      "matchPackageNames": [
+        "phpunit/phpunit"
+      ],
+      "allowedVersions": "<12"
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     },
     {
-      "matchDepTypes": ["require-dev", "devDependencies"],
+      "matchDepTypes": [
+        "require-dev",
+        "devDependencies"
+      ],
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
       "additionalBranchPrefix": "major-"
     }
