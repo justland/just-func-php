@@ -1,60 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": [
-    "Policy is set explicitly here rather than inherited from",
-    "github>unional/renovate-preset. As of 2026-09-01 that preset publishes only",
-    "{extends: [config:base, :preserveSemverRanges]} -- no automerge, no release-age",
-    "soak, no packageRules -- and config:base is Renovate's deprecated name for",
-    "config:recommended. Extending it produced dependency PRs that never merged.",
-    "Exit condition: once unional/renovate-preset publishes the baseline policy,",
-    "collapse this file back to a single extends of that preset."
-  ],
-  "extends": [
-    "config:recommended",
-    ":preserveSemverRanges",
-    ":semanticCommits"
-  ],
-  "minimumReleaseAge": "3 days",
-  "platformAutomerge": true,
+  "extends": ["github>repobuddy/renovate-preset"],
+  "description": "rebaseWhen is 'auto', not the preset's 'behind-base-branch': this repo has a merge queue, so a PR need not be up to date to enqueue, and forced rebases would re-run the full matrix on every open PR each time main moves.",
   "rebaseWhen": "auto",
   "packageRules": [
     {
       "description": "phpunit 12+ requires PHP >=8.3 and 13 requires >=8.4.1; this library supports ^8.2. Lift when the minimum PHP is raised.",
-      "matchPackageNames": [
-        "phpunit/phpunit"
-      ],
+      "matchPackageNames": ["phpunit/phpunit"],
       "allowedVersions": "<12"
     },
     {
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
-    },
-    {
-      "matchDepTypes": [
-        "require-dev",
-        "devDependencies"
-      ],
-      "automerge": true
-    },
-    {
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "automerge": false,
-      "additionalBranchPrefix": "major-"
+      "description": "Composer dev dependencies (require-dev) get the preset's devDependencies major policy: they merge after a 7 day soak.",
+      "matchDepTypes": ["require-dev"],
+      "matchUpdateTypes": ["major"],
+      "automerge": true,
+      "minimumReleaseAge": "7 days"
     }
-  ],
-  "vulnerabilityAlerts": {
-    "minimumReleaseAge": "1 day",
-    "automerge": true
-  },
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true
-  }
+  ]
 }
